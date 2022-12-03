@@ -1,21 +1,22 @@
 import { View, Text,StyleSheet, ScrollView, Button } from 'react-native'
 import React, { useState } from 'react'
 import {useRoute} from "@react-navigation/native"
-const Description = () => {
+const BarDescription = () => {
   const [button,setbutton]=useState(false)
   const routes=useRoute()
   routes.params.Alergy = routes.params.Alergy.filter(function(str) {
     return /\S/.test(str);
 });
-  let  Requestedinfo=[]
-    routes.params.Alergy.map((alergy)=>(
-    Requestedinfo.push(routes.params.ObjInfo.filter((obj)=>{
-      return obj.nutrientName.includes(alergy.trim())
-  }))
-  ))
-  const VisibleInfo=routes.params.ObjInfo.length>0
-  console.log(VisibleInfo)
-  Requestedinfo = [].concat(...Requestedinfo);
+const VisibleInfo=routes.params.ObjInfo.length>0
+let  Requestedinfo=[]
+routes.params.Alergy.map((alergy)=>(
+Requestedinfo.push(routes.params.ObjInfo.filter((obj)=>{
+    console.log(obj.nutrient.name)
+  return obj.nutrient.name.includes(alergy.trim())
+}))
+))
+Requestedinfo = [].concat(...Requestedinfo);
+console.log(Requestedinfo)
   return (
     <>
     <View style={styles.container}>
@@ -25,9 +26,8 @@ const Description = () => {
           return(
             <>
             <View style={styles.container2}>
-            <Text>{Alergy.fdcIds}</Text>
-            <Text>{Alergy.nutrientName}  </Text>
-            <Text style={{fontWeight:"bold"}}>{Alergy.nutrientNumber}{Alergy.unitName}</Text>
+            <Text>{Alergy.nutrient.name}  </Text>
+            <Text style={{fontWeight:"bold"}}>{Alergy.nutrient.number}{Alergy.nutrient.unitName}</Text>
             </View>
             </>
           )
@@ -50,8 +50,8 @@ const Description = () => {
       {
         routes.params.ObjInfo.map((Alergy)=>(
           <View style={{ flex: 1, alignSelf: 'stretch', flexDirection: 'row' }}>
-          <Text style={{ flex: 1, alignSelf: 'stretch' }}>{Alergy.nutrientName} </Text>
-          <Text style={{ flex: 1, alignSelf: 'stretch' }}>{Alergy.nutrientNumber}{Alergy.unitName}</Text>
+          <Text style={{ flex: 1, alignSelf: 'stretch' }}>{Alergy.nutrient.name} </Text>
+          <Text style={{ flex: 1, alignSelf: 'stretch' }}>{Alergy.nutrient.number}{Alergy.nutrient.unitName}</Text>
           </View>
         ))
       }
@@ -63,7 +63,7 @@ const Description = () => {
   )
 }
 
-export default Description
+export default BarDescription
 
 const styles = StyleSheet.create({
   container: {

@@ -5,7 +5,7 @@ import FoodScreen from "./screens/FoodScreen"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from './screens/SplashScreen';
 import Description from './screens/Description';
-import BarcodeScreen from './componenets/BarcodeScreen'
+import BarDescription from './componenets/BarcodeDescription';
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
@@ -14,10 +14,10 @@ export default function App() {
        <Stack.Group screenOptions={{headerShown: false}}>
        <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Home" component={FoodScreen} />
-        <Stack.Screen name='Barcode' component={BarcodeScreen}/>    
         </Stack.Group>
-        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+        <Stack.Group screenOptions={{ presentation: 'modal' ,headerShown:true}}>
           <Stack.Screen name='Description' component={Description}/>
+          <Stack.Screen name='BarDescription' component={BarDescription}/>
         </Stack.Group>
         </Stack.Navigator>
     </NavigationContainer>
