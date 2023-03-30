@@ -7,8 +7,7 @@ import {useNavigation} from "@react-navigation/native"
 import { Loginuser } from '../src/graphql/mutations';
 import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux";
-import { tokenAuth } from '../Redux/slice';
-import LoadingScreen from '../componenets/LoadingScreen';
+import { tokenAuth } from '../Redux/slice'
 export default function App() {
   const navigation=useNavigation()
   const [username,setUsername]=useState("")
@@ -76,7 +75,7 @@ export default function App() {
     <>
     {
       <View style={styles.container}>
-        <Text>Image-Based-Attendance-System</Text>
+        <Text style={{color:"#b92b27",fontSize:"20",marginBottom:29}}>Image-Based-Attendance-System</Text>
         <Image
         style={styles.tinyLogo}
         source={require('./../assets/images/camera.png')}
@@ -138,5 +137,19 @@ const styles = StyleSheet.create({
   logo: {
     width: 66,
     height: 58,
+  },
+  linearGradient: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 5
+  },
+  buttonText: {
+    fontSize: 18,
+    fontFamily: 'Gill Sans',
+    textAlign: 'center',
+    margin: 10,
+    color: '#ffffff',
+    backgroundColor: 'transparent',
   },
 });

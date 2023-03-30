@@ -33,7 +33,7 @@ export default function ImagePickerExample(props) {
        <ScrollView  horizontal>
       {image.length>0? image.map((img)=>(
         <Image source={{uri:img}} style={{width:400, height:400,borderRadius:20}} resizeMode="cover" />
-      )):<Image source={require("../assets/images/download.png")}  style={{width:400, height:400,borderRadius:10}} resizeMode="cover" />
+      )):<Image source={require("../assets/images/camera.png")}  style={{width:350, height:150,borderRadius:10,marginTop:30}} resizeMode="contain" />
     }
       </ScrollView >
       <View style={{display:'flex',flexDirection:"row",justifyContent:"space-between"}}>

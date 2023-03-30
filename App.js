@@ -22,7 +22,7 @@ export default function App() {
        <Stack.Screen name="Home" component={Home} />
        <Stack.Screen name="attendance" component={Attendance} />
         </Stack.Group>
-        <Stack.Group screenOptions={{presentation:"modal"}}>
+        <Stack.Group screenOptions={{presentation:"modal",headerShown:false}}>
           <Stack.Screen name="presentStudents" component={modelPresent}></Stack.Screen>
         </Stack.Group>
         </Stack.Navigator>

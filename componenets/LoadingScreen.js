@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   introImageStyle: {
-    width:350,
+    width:370,
     height:300,
   },
   introTextStyle: {
@@ -162,7 +162,7 @@ const slides = [
   key: 's1',
   title: 'Image-Based Attendance System',
   text: 'Welcome',
-  image:require('./../assets/images/attendance.png'),
+  image:require('./../assets/images/attendance3.jpeg'),
   backgroundColor: 'white',
 },
   {

@@ -60,6 +60,7 @@ const Document = (props) => {
             }
           })).then(()=>{
             props.GetRoll(rollNumber,usersRecords)
+            setData(usersRecords)
             alert("Document uploaded")
             setupload(true)
           })
@@ -73,7 +74,7 @@ const Document = (props) => {
       {
         upload===false? <Button title="Select Excel file" onPress={pickDocument} />:
         <View >
-          <Button title="View" onPress={()=>navigate.navigate('presentStudents',usersRecords)} />
+          <Button title="View" onPress={()=>navigate.navigate('presentStudents',data)} />
           </View>
       }
     </View>
