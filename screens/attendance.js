@@ -3,10 +3,11 @@ import { StyleSheet, Text, View, SafeAreaView, Button, Image, ScrollView } from 
 import { useEffect, useRef, useState } from 'react';
 import { API, Amplify, graphqlOperation } from "aws-amplify";
 import { useDispatch,useSelector } from "react-redux";
-import Gallery from './Camera'
-import Document from './document';
+import Gallery from '../componenets/Camera'
+import Document from '../componenets/document';
 import { LastComparison,comparingFaces} from "../src/graphql/queries";
-import {storeImageToS3Bucket,removal,conversion} from './utils'
+import {storeImageToS3Bucket,removal,conversion} from '../componenets/utils'
+import Card from '../componenets/card';
 export default function Attendane() {
   const [images, setPhoto] = useState([]);
   const [rollNumbers,setrollNumbers]=useState([])
@@ -115,10 +116,10 @@ const handleSubmit = async (e) => {
 }
 <ScrollView horizontal>
 {
-allUsers.length>0&&
-          allUsers&&  allUsers.map((user)=>(
-            <Image source={{uri:user.image}} style={{width: 200, height: 100,marginRight:5 }} />
-          ))
+          // allUsers&&  allUsers.map((user)=>(
+          //   <Image source={{uri:user.image}} style={{width:300, height:200,marginRight:5 }} />
+          // ))
+          <Card image={images[0]}/>
           
 }
 </ScrollView>
@@ -129,13 +130,15 @@ allUsers.length>0&&
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
+
   },
   buttonContainer: {
     alignSelf:"center"
   },
   preview: {
     alignSelf: 'stretch',
+  },
+  Text1:{
+    marginTop:50
   }
 });

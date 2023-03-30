@@ -75,10 +75,12 @@ export default function App() {
   return (
     <>
     {
-      loader?<LoadingScreen/>:<View style={styles.container}>
+      <View style={styles.container}>
+        <Text>Image-Based-Attendance-System</Text>
         <Image
         style={styles.tinyLogo}
-        source={require('./../assets/images/attendance.png')}
+        source={require('./../assets/images/camera.png')}
+        resizeMode="contain"
       
       />
         <Text style={{color:"red"}}>{Error}</Text>
@@ -95,7 +97,7 @@ export default function App() {
         keyboardType="password"
       />
       <TouchableOpacity style={styles.button} onPress={submitHandler}>
-        <Text style={{color:"white",fontWeight:"bold"}}>Login</Text>
+        <Text style={{color:"white",fontWeight:"bold",textAlign:"center"}}>Login</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
@@ -114,20 +116,24 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     margin: 12,
-    borderBottomWidth: 1,
+    borderWidth: 1,
     padding: 10,
-    borderRadius:20
+    borderRadius:20,
+    width:"50%%",
+    marginBottom:20
   },
   button:{
-    backgroundColor:"black",
+    backgroundColor:"navy",
     color:"white",
+    textAlign:"center",
+    width:"50%",
     paddingVertical:10,
     paddingHorizontal:20,
-    borderRadius:20
+    borderRadius:20,
   },
   tinyLogo: {
     width:"40%",
-    height:"20%",
+    height:"15%",
   },
   logo: {
     width: 66,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Button,ScrollView } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import XLSX from 'xlsx';
@@ -6,9 +6,12 @@ import * as FileSystem from 'expo-file-system';
 import { API, Amplify, graphqlOperation } from "aws-amplify";
 import { getUser } from "../src/graphql/queries";
 import { useDispatch,useSelector } from "react-redux";
+import { useNavigation } from '@react-navigation/native';
 const Document = (props) => {
   const [data, setData] = React.useState([]);
   const Token=useSelector(state=>state.userReducer.token)
+  const [upload,setupload]=useState(false)
+  const navigate=useNavigation()
   Amplify.configure({
     API: {
       graphql_headers: async () => ({
@@ -57,6 +60,8 @@ const Document = (props) => {
             }
           })).then(()=>{
             props.GetRoll(rollNumber,usersRecords)
+            alert("Document uploaded")
+            setupload(true)
           })
     } catch (err) {
      alert("Try again with Valid file")
@@ -65,14 +70,12 @@ const Document = (props) => {
 
   return (
     <View>
-      <Button title="Select Excel file" onPress={pickDocument} />
-      {data.length > 0 && (
-        <View>
-          <Text>Excel data:</Text>
-        </View>
-        
-      )}
-      
+      {
+        upload===false? <Button title="Select Excel file" onPress={pickDocument} />:
+        <View >
+          <Button title="View" onPress={()=>navigate.navigate('presentStudents',usersRecords)} />
+          </View>
+      }
     </View>
   );
 };

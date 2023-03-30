@@ -29,15 +29,17 @@ export default function ImagePickerExample(props) {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: 'center',justifyContent:"space-between",marginTop:'70%',padding:10 }}>
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
-      <ScrollView  horizontal>
-      {image && image.map((img)=>(
-        <Image source={{uri:img}} style={{width: 200, height: 100,marginRight:5 }} />
-      ))
+    <View style={{display:"flex",flex:1,alignItems: 'center',justifyContent:"space-between"}}>
+       <ScrollView  horizontal>
+      {image.length>0? image.map((img)=>(
+        <Image source={{uri:img}} style={{width:400, height:400,borderRadius:20}} resizeMode="cover" />
+      )):<Image source={require("../assets/images/download.png")}  style={{width:400, height:400,borderRadius:10}} resizeMode="cover" />
     }
       </ScrollView >
-      
+      <View style={{display:'flex',flexDirection:"row",justifyContent:"space-between"}}>
+      <Button title="Upload" onPress={pickImage} />
+      <Button title="Discard" onPress={()=>setImage([])} />
+      </View>
     </View>
   );
 }
