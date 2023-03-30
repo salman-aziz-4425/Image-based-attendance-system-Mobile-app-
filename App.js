@@ -1,26 +1,27 @@
 
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import FoodScreen from "./screens/FoodScreen"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SplashScreen from './screens/SplashScreen';
-import Description from './screens/Description';
-import BarDescription from './componenets/BarcodeDescription';
+import Home from './componenets/Home'
+import Attendance from './componenets/attendance';
+import { Amplify } from 'aws-amplify';
+import awsconfig from './src/aws-exports';
+import { Provider } from 'react-redux';
+import { store } from './Redux/store';
+Amplify.configure(awsconfig);
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
+    <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator>
        <Stack.Group screenOptions={{headerShown: false}}>
-       <Stack.Screen name="Splash" component={SplashScreen} />
-        <Stack.Screen name="Home" component={FoodScreen} />
-        </Stack.Group>
-        <Stack.Group screenOptions={{ presentation: 'modal' ,headerShown:true}}>
-          <Stack.Screen name='Description' component={Description}/>
-          <Stack.Screen name='BarDescription' component={BarDescription}/>
+       <Stack.Screen name="Home" component={Home} />
+       <Stack.Screen name="attendance" component={Attendance} />
         </Stack.Group>
         </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }
 
