@@ -1,14 +1,19 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { useRoute } from '@react-navigation/native'
+import Card from './card'
 
-const modelPresent = () => {
-    console.log(useRoute())
+const ModelPresent = () => {
+  let array=useRoute()
   return (
-    <View>
-      <Text>modelPresent</Text>
-    </View>
+    <>
+      {
+        array.params.map((user)=>(
+          <Card image={user.image} RollNo={user.rollNumber}/>
+        ))
+      }
+    </>
   )
 }
 
-export default modelPresent
+export default ModelPresent

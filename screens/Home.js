@@ -8,6 +8,7 @@ import { Loginuser } from '../src/graphql/mutations';
 import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux";
 import { tokenAuth } from '../Redux/slice'
+import Loading from '../componenets/Loading';
 export default function App() {
   const navigation=useNavigation()
   const [username,setUsername]=useState("")
@@ -62,6 +63,9 @@ export default function App() {
         if(result.data.loginUser.user.rollNumber.includes("TD")){
           Router.navigate("attendance");
         }
+        else{
+          setLoader(false)
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -74,30 +78,35 @@ export default function App() {
   return (
     <>
     {
-      <View style={styles.container}>
-        <Text style={{color:"#b92b27",fontSize:"20",marginBottom:29}}>Image-Based-Attendance-System</Text>
+     <View style={styles.container}>
         <Image
         style={styles.tinyLogo}
-        source={require('./../assets/images/camera.png')}
-        resizeMode="contain"
+        source={require('./../assets/images/attendance2.jpeg')}
+        resizeMode="cover"
       
       />
         <Text style={{color:"red"}}>{Error}</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(Text)=>userHandler(Text)}
-        placeholder="Enter username"
-        keyboardType="text"
-      />
-        <TextInput
-        style={styles.input}
-        onChangeText={(Text)=>passHandler(Text)}
-        placeholder="Enter Password"
-        keyboardType="password"
-      />
-      <TouchableOpacity style={styles.button} onPress={submitHandler}>
-        <Text style={{color:"white",fontWeight:"bold",textAlign:"center"}}>Login</Text>
-      </TouchableOpacity>
+        {
+           loader?<Loading/>:
+           <>
+           <TextInput
+           style={styles.input}
+           onChangeText={(Text)=>userHandler(Text)}
+           placeholder="Enter username"
+           keyboardType="text"
+         />
+           <TextInput
+           style={styles.input}
+           onChangeText={(Text)=>passHandler(Text)}
+           placeholder="Enter Password"
+           secureTextEntry={true}
+           keyboardType="password"
+         />
+         <TouchableOpacity style={styles.button} onPress={submitHandler}>
+           <Text style={{color:"white",fontWeight:"bold",textAlign:"center"}}>Login</Text>
+         </TouchableOpacity>
+         </>
+        }
       <StatusBar style="auto" />
     </View>
     }
@@ -118,7 +127,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderRadius:20,
-    width:"50%%",
+    width:"50%",
     marginBottom:20
   },
   button:{
@@ -131,8 +140,8 @@ const styles = StyleSheet.create({
     borderRadius:20,
   },
   tinyLogo: {
-    width:"40%",
-    height:"15%",
+    width:200,
+    height:150,
   },
   logo: {
     width: 66,

@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, Button, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Button, Image, ScrollView, Touchable } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import { API, Amplify, graphqlOperation } from "aws-amplify";
 import { useDispatch,useSelector } from "react-redux";
@@ -8,12 +8,13 @@ import Document from '../componenets/document';
 import { LastComparison,comparingFaces} from "../src/graphql/queries";
 import {storeImageToS3Bucket,removal,conversion} from '../componenets/utils'
 import Card from '../componenets/card';
-export default function Attendane() {
+import { TouchableOpacity } from 'react-native-gesture-handler';
+export default function Attendance() {
   const [images, setPhoto] = useState([]);
   const [rollNumbers,setrollNumbers]=useState([])
   const [allUsers,setallUsers]=useState([])
   const [flag, setFlag] = useState(false);
-  const Token=useSelector(state=>state.userReducer.token)
+  let Token=useSelector(state=>state.userReducer.token)
   Amplify.configure({
     API: {
       graphql_headers: async () => ({
@@ -110,19 +111,13 @@ const handleSubmit = async (e) => {
   return (
       <View style={styles.buttonContainer}>
         <Gallery PreviewImage={PreviewImage}/>
-        <Document GetRoll={getRollnumber}/>
         {(images.length>0&&rollNumbers.length>1)&&
-          <Button style={{flex:1}} title='Upload' onPress={handleSubmit}>Upload</Button>
+        <TouchableOpacity style={{zIndex:1}} onPress={handleSubmit}>
+          <Image source={require("../assets/images/download.png")} style={{left:"38%",top:40,height:120,width:100,zIndex:1}} resizeMode="contain"/>
+          </TouchableOpacity>
 }
-<ScrollView horizontal>
-{
-          // allUsers&&  allUsers.map((user)=>(
-          //   <Image source={{uri:user.image}} style={{width:300, height:200,marginRight:5 }} />
-          // ))
-          <Card image={images[0]}/>
-          
-}
-</ScrollView>
+<ScrollView></ScrollView>
+<Document GetRoll={getRollnumber}/>
       </View>
 
   );
@@ -133,7 +128,8 @@ const styles = StyleSheet.create({
 
   },
   buttonContainer: {
-    alignSelf:"center"
+    alignSelf:"center",
+    backgroundColor:"white"
   },
   preview: {
     alignSelf: 'stretch',

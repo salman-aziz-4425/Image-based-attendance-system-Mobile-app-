@@ -15,7 +15,7 @@ const Document = (props) => {
   Amplify.configure({
     API: {
       graphql_headers: async () => ({
-        token:Token||""
+        token:Token
       }),
     },
   });
@@ -72,7 +72,7 @@ const Document = (props) => {
   return (
     <View>
       {
-        upload===false? <Button title="Select Excel file" onPress={pickDocument} />:
+        upload===false? <Button style={{marginTop:1}} title="Select Excel file" onPress={pickDocument} />:
         <View >
           <Button title="View" onPress={()=>navigate.navigate('presentStudents',data)} />
           </View>

@@ -99,6 +99,7 @@ const LoadingScreen= () => {
           renderItem={RenderItem}
           renderDoneButton={RenderNextButton}
           renderNextButton={RenderDoneButton}
+          onDone={onDone}
         />
       )}
     </>
@@ -130,8 +131,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   introImageStyle: {
-    width:370,
-    height:300,
+    width:400,
+    height:400,
   },
   introTextStyle: {
     fontSize: 18,
@@ -158,23 +159,22 @@ const styles = StyleSheet.create({
 });
 
 const slides = [
-{
-  key: 's1',
-  title: 'Image-Based Attendance System',
-  text: 'Welcome',
-  image:require('./../assets/images/attendance3.jpeg'),
-  backgroundColor: 'white',
-},
+  {
+    key: 's1',
+    text: 'Powered by Amazon',
+    image:require('../assets/images/amazon.png'),
+    backgroundColor: 'white',
+  },
   {
     key: 's2',
     text: 'Facial Recogition',
     image: require('../assets/images/attendance2.jpeg'),
     backgroundColor: 'white',
   },
-  {
-    key: 's3',
-    text: 'Powered by Amazon',
-    image:require('../assets/images/amazon.png'),
-    backgroundColor: 'white',
-  },
+{
+  key: 's3',
+  text: 'Aws Services',
+  image:require('./../assets/images/aws.png'),
+  backgroundColor: '#f8d568',
+},
 ];

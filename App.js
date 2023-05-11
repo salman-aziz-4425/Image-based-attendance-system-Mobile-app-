@@ -8,7 +8,7 @@ import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
 import { Provider } from 'react-redux';
 import { store } from './Redux/store';
-import modelPresent from './componenets/modelPresent';
+import ModelPresent from './componenets/modelPresent';
 import LoadingScreen from './componenets/LoadingScreen';
 Amplify.configure(awsconfig);
 const Stack = createNativeStackNavigator();
@@ -23,7 +23,7 @@ export default function App() {
        <Stack.Screen name="attendance" component={Attendance} />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation:"modal",headerShown:false}}>
-          <Stack.Screen name="presentStudents" component={modelPresent}></Stack.Screen>
+          <Stack.Screen name="presentStudents" component={ModelPresent}></Stack.Screen>
         </Stack.Group>
         </Stack.Navigator>
     </NavigationContainer>
