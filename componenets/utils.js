@@ -1,5 +1,6 @@
 import { API, Amplify, graphqlOperation } from "aws-amplify";
 import { getS3Url } from '../src/graphql/queries';
+import axios from 'axios';
 export const conversion = async (array, rollNumbers) => {
   array = array.filter((user) => {
     let index = rollNumbers.findIndex((user1) => {
@@ -39,27 +40,33 @@ export const storeImageToS3Bucket = async (GroupImage) => {
     setError({ ...error, image: "Kindly upload your picture" });
     return;
   }
-  console.log("Image List => ", GroupImage);
   const image = GroupImage;
+  // const base64String = await FileSystem.readAsStringAsync(result.uri, { encoding: FileSystem.EncodingType.Base64 });
+
+  // // Create Blob object with data
+  // const blob = new Blob([Buffer.from(base64String, 'base64')], { type: result.type });
+
+  // Upload blob to S3 bucket
+
+
   //  Get Secure URL from our server
   const res = await API.graphql(graphqlOperation(getS3Url));
   //  Post the image directly to S3 bucket
-  console.log("Res => ", res);
   const s3obj = res.data.getS3Url;
-  console.log("Url :- ", s3obj);
-  await fetch(s3obj?.s3Url, {
-    method: "PUT",
+  await axios.put(s3obj?.s3Url, image, {
     headers: {
-      ContentType: "multipart/form-data",
+      'Content-Type': 'multipart/form-data',
     },
-    body: image,
   })
     .then((res) => {
       console.log("Bucket Res ", res, " s3obj ", s3obj?.key);
     })
     .catch((err) => {
       console.log("Error => ", err);
+      console.log(" => ", err);
+
       return undefined;
     });
   return s3obj?.key;
 }
+

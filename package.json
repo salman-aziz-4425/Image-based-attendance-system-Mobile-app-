@@ -18,7 +18,7 @@
     "@reduxjs/toolkit": "^1.9.3",
     "amazon-cognito-identity-js": "^6.2.0",
     "aws-amplify": "^5.0.22",
-    "axios": "^1.2.0",
+    "axios": "^1.4.0",
     "expo": "~47.0.8",
     "expo-barcode-scanner": "~12.1.0",
     "expo-camera": "~13.1.0",
