@@ -36,6 +36,8 @@ export const removal = async (finalresponse) => {
   return res
 }
 export const storeImageToS3Bucket = async (GroupImage) => {
+
+  console.log("storing image"+JSON.stringify(GroupImage))
   if (GroupImage === undefined || GroupImage.length < 1) {
     alert("no pic image");
     setError({ ...error, image: "Kindly upload your picture" });
@@ -44,7 +46,7 @@ export const storeImageToS3Bucket = async (GroupImage) => {
   const image = GroupImage;
 
 
-  const response = await fetch(GroupImage.uri);
+  const response = await fetch(GroupImage);
   const blob = await response.blob();
   console.log("Blob=>"+JSON.stringify(blob))
   //  Get Secure URL from our server

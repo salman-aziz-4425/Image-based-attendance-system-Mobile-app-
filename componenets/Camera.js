@@ -30,7 +30,7 @@ export default function ImagePickerExample(props) {
     if (!result.canceled) {
 
           setImage([...image,result.assets[0].uri]);
-          props.PreviewImage([...image,result])
+          props.PreviewImage([...image,result.assets[0].uri])
     }
 
     

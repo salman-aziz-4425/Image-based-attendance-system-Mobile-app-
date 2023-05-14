@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Button,ScrollView ,StyleSheet,TouchableOpacity} from 'react-native';
+import { View, Text, Button,ScrollView ,StyleSheet,TouchableOpacity,Image} from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import XLSX from 'xlsx';
 import * as FileSystem from 'expo-file-system';
@@ -77,9 +77,17 @@ const Document = (props) => {
       </TouchableOpacity>
     ) : (
       <View style={styles.viewButtonContainer}>
-        <TouchableOpacity style={styles.viewButton} onPress={() => navigate.navigate('presentStudents', data)}>
+        <TouchableOpacity style={styles.viewButton} onPress={() => navigate.navigate('presentStudents', {
+            users:data,
+            present:props.presentimages
+        })}>
           <Text style={styles.viewButtonText}>View</Text>
         </TouchableOpacity>
+        {(props.images.length > 0 && props.rollNumbers.length > 0) && 
+    <TouchableOpacity onPress={props.handleSubmit}>
+      <Image source={require("../assets/images/download.png")} style={styles.downloadButtonImage} resizeMode="cover"/>
+    </TouchableOpacity>
+  }
       </View>
     )}
   </View>
@@ -89,10 +97,9 @@ const Document = (props) => {
 export default Document;
 const styles = StyleSheet.create({
   container: {
+
     alignItems: "center",
     justifyContent: "center",
-    marginTop:10,
-    zIndex:1
   },
   uploadButton: {
     backgroundColor: "blue",
@@ -117,5 +124,17 @@ const styles = StyleSheet.create({
   viewButtonText: {
     color: "#fff",
     fontSize: 18,
+  },
+  downloadButtonImage: {
+    backgroundColor:"blue",
+    height:90,
+    width:60,
+    zIndex:1
+  },
+  documentContainer: {
+    marginBottom:180,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

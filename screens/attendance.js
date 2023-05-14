@@ -14,6 +14,7 @@ export default function Attendance() {
   const [rollNumbers,setrollNumbers]=useState([])
   const [allUsers,setallUsers]=useState([])
   const [flag, setFlag] = useState(false);
+  const [finalroll,setfinalroll]=useState([])
   let Token=useSelector(state=>state.userReducer.token)
   Amplify.configure({
     API: {
@@ -31,18 +32,16 @@ const PreviewImage=(image)=>{
   console.log(image)
   }
 const getRollnumber=(rollNumbers,userRecords)=>{
-  console.log(rollNumbers)
   setrollNumbers(rollNumbers)
-  console.log(userRecords)
   setallUsers(userRecords)
 }
 
 const handleSubmit = async (e) => {
   setFlag(false);
   let finalresponse = [];
+  console.log(images.length)
   e.preventDefault();
   //Excel to array
-  console.log(rollNumbers)
   if (rollNumbers.length>0) {
       await new Promise(async (r, e) => {
         console.log("next promise");
@@ -91,8 +90,8 @@ const handleSubmit = async (e) => {
                throw "Error";
              }
              console.log("response4 ",result);
-             setrollNumbers(result);
-              alert("Attendance Marked");
+             setfinalroll(result);
+              alert("Attendance Marked go check view page");
            });
          }).catch((error) => {
            console.log("error => ", error);
@@ -109,16 +108,9 @@ const handleSubmit = async (e) => {
   <View style={styles.galleryContainer}>
     <Gallery PreviewImage={PreviewImage}/>
   </View>
-
    <View style={styles.documentContainer}>
- <Document GetRoll={getRollnumber}/>
- {(images.length > 0 && rollNumbers.length > 1) && 
-    <TouchableOpacity onPress={handleSubmit}>
-      <Image source={require("../assets/images/download.png")} style={styles.downloadButtonImage} resizeMode="cover"/>
-    </TouchableOpacity>
-  }
+ <Document GetRoll={getRollnumber} presentimages={finalroll} images={images} rollNumbers={rollNumbers} handleSubmit={handleSubmit}/>
 </View>
-
 </View>
     </>
 
@@ -144,8 +136,10 @@ const styles = StyleSheet.create({
     zIndex:1
   },
   downloadButtonImage: {
-    height:60,
+    backgroundColor:"blue",
+    height:90,
     width:60,
+    zIndex:1
   },
   documentContainer: {
     marginBottom:180,
