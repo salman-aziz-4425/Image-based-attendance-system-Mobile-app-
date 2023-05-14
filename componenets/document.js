@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Button,ScrollView } from 'react-native';
+import { View, Text, Button,ScrollView ,StyleSheet,TouchableOpacity} from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import XLSX from 'xlsx';
 import * as FileSystem from 'expo-file-system';
@@ -70,15 +70,52 @@ const Document = (props) => {
   };
 
   return (
-    <View>
-      {
-        upload===false? <Button style={{marginTop:1}} title="Select Excel file" onPress={pickDocument} />:
-        <View >
-          <Button title="View" onPress={()=>navigate.navigate('presentStudents',data)} />
-          </View>
-      }
-    </View>
+    <View style={styles.container}>
+    {upload === false ? (
+      <TouchableOpacity style={styles.uploadButton} onPress={pickDocument}>
+        <Text style={styles.uploadText}>Select Excel file</Text>
+      </TouchableOpacity>
+    ) : (
+      <View style={styles.viewButtonContainer}>
+        <TouchableOpacity style={styles.viewButton} onPress={() => navigate.navigate('presentStudents', data)}>
+          <Text style={styles.viewButtonText}>View</Text>
+        </TouchableOpacity>
+      </View>
+    )}
+  </View>
   );
 };
 
 export default Document;
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop:10,
+    zIndex:1
+  },
+  uploadButton: {
+    backgroundColor: "blue",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginBottom:80
+  },
+  uploadText: {
+    color: "#fff",
+    fontSize: 18,
+  },
+  viewButtonContainer: {
+    marginTop: 20,
+  },
+  viewButton: {
+    backgroundColor: "#007AFF",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+  },
+  viewButtonText: {
+    color: "#fff",
+    fontSize: 18,
+  },
+});

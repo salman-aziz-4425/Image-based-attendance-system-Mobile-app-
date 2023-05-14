@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Image, View, Platform,ScrollView, TouchableOpacity,Text } from 'react-native';
+import { Button, Image, View, Platform,ScrollView, TouchableOpacity,Text,StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { API, Amplify, graphqlOperation } from "aws-amplify";
 import {useSelector} from 'react-redux'
@@ -13,42 +13,92 @@ export default function ImagePickerExample(props) {
       }),
     },
   });
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
+  const hello=()=>{
+    console.log("hello")
+  }
+  async function pickImage() {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
-    console.log(result);
-
+  console.log(result)
+    // Convert to blob
+    // const response = await fetch(result.assets[0].uri);
+    // const blob = await response.blob();
     if (!result.canceled) {
 
-      setImage([...image,result.assets[0].uri]);
-      props.PreviewImage([...image,result.assets[0].uri])
+          setImage([...image,result.assets[0].uri]);
+          props.PreviewImage([...image,result])
     }
-  };
 
+    
+  }
   return (
-    <View style={{display:"flex",flex:1,alignItems: 'center',justifyContent:"space-between"}}>
-       <ScrollView  horizontal>
-      {image.length>0? image.map((img)=>(
-        <Image source={{uri:img}} style={{width:400, height:260}} resizeMode="cover" />
-      )):<Image source={require("../assets/images/attendance3.jpeg")}  style={{width:400, height:300,borderRadius:10,marginTop:-43}} resizeMode="contain" />
-    }
-      </ScrollView >
-      <Text style={{marginBottom:20,color:"gray"}}>Add or Delete Photo</Text>
-      <View style={{display:'flex',flexDirection:"row",justifyContent:"space-between",marginTop:40}}>
+<View style={styles.container}>
+  <ScrollView horizontal>
+    {image.length > 0 ? (
+      image.map((img, index) => (
+        <Image key={index} source={{ uri: img }} style={styles.placeholderImage} resizeMode="cover" />
+      ))
+    ) : (
+      <Image source={require("../assets/images/attendance3.jpeg")} style={styles.placeholderImage} resizeMode="contain" />
+    )}
+  </ScrollView>
+  <Text style={styles.addDeleteText}>Add or Delete Photos</Text>
+  <View style={styles.buttonsContainer}>
+    <TouchableOpacity onPress={pickImage} style={styles.button}>
+      <Image source={require("../assets/images/plus.png")} style={styles.buttonIcon} />
+    </TouchableOpacity>
+    <TouchableOpacity onPress={() => setImage([])} style={styles.button} >
+      <Image source={require("../assets/images/minus.png")} style={styles.buttonIcon} />
+    </TouchableOpacity>
+  </View>
+  
+</View>
 
-        <TouchableOpacity onPress={pickImage}>
-        <Image source={require("../assets/images/plus.png")} style={{width:40, height:40,borderRadius:10,right:30}}/>
-        </TouchableOpacity>
-      {/* <Button title="Upload" onPress={pickImage} /> */}
-      <TouchableOpacity onPress={()=>setImage([])}>
-        <Image source={require("../assets/images/minus.png")} style={{width:40, height:40,borderRadius:10,left:30}}/>
-        </TouchableOpacity>
-      </View>
-    </View>
+
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#fff",
+  },
+  image: {
+    width:500,
+    height: 260,
+    borderRadius: 10,
+    marginHorizontal: 10,
+  },
+  placeholderImage: {
+    width: 400,
+    height: 300,
+    borderRadius: 10,
+  },
+  addDeleteText: {
+    marginBottom: 20,
+    color: "gray",
+    fontSize: 16,
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "50%",
+  },
+  button: {
+    backgroundColor: "#007AFF",
+    width: 50,
+    height: 50,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonIcon: {
+    width: 30,
+    height: 30,
+  },
+});
