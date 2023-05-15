@@ -3,8 +3,13 @@ import { Button, Image, View, Platform,ScrollView, TouchableOpacity,Text,StyleSh
 import * as ImagePicker from 'expo-image-picker';
 import { API, Amplify, graphqlOperation } from "aws-amplify";
 import {useSelector} from 'react-redux'
+import { analyzeImage } from '../src/graphql/queries';
+import {storeImageToS3Bucket} from './utils'
+import Loading2 from './loading2'
 export default function ImagePickerExample(props) {
   const [image, setImage] = useState([]);
+  const [process,setProcess]=useState(false)
+  const [operation,setOperation]=useState("")
   let Token=useSelector(state=>state.userReducer.token)
   Amplify.configure({
     API: {
@@ -23,7 +28,31 @@ export default function ImagePickerExample(props) {
       aspect: [4, 3],
       quality: 1,
     });
-  console.log(result)
+  setOperation("Uploading image")
+  setProcess(true)
+  const imageKey = await storeImageToS3Bucket(result.assets[0].uri);
+  console.log("Image key  " + imageKey);
+  if (imageKey === undefined) {
+    setProcess(false)
+    alert("Key not found")
+    return;
+  }
+  const variable1={
+      rollNumber:"19F-0295",
+      imageS3Key:imageKey
+  }
+  try{
+  const response= await API.graphql(graphqlOperation(analyzeImage,variable1))
+  console.log(response)
+  if(!response.data?.analyzeImage?.faceConf){
+    setProcess(false)
+    throw new Error
+  }
+}catch{
+  alert("In picture it is not a human")
+  setProcess(false)
+  return
+}
     // Convert to blob
     // const response = await fetch(result.assets[0].uri);
     // const blob = await response.blob();
@@ -32,11 +61,13 @@ export default function ImagePickerExample(props) {
           setImage([...image,result.assets[0].uri]);
           props.PreviewImage([...image,result.assets[0].uri])
     }
-
-    
+    setProcess(false)
   }
   return (
 <View style={styles.container}>
+  {
+    process&&<Loading2 text={operation}/>
+  }
   <ScrollView horizontal>
     {image.length > 0 ? (
       image.map((img, index) => (
@@ -64,6 +95,7 @@ export default function ImagePickerExample(props) {
 
 const styles = StyleSheet.create({
   container: {
+    flex:1,
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#fff",
@@ -80,11 +112,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   addDeleteText: {
-    marginBottom: 20,
+    top:-50,
     color: "gray",
     fontSize: 16,
   },
   buttonsContainer: {
+    top:-30,
     flexDirection: "row",
     justifyContent: "space-between",
     width: "50%",

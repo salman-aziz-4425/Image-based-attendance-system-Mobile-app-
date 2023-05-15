@@ -9,20 +9,26 @@ import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux";
 import { tokenAuth } from '../Redux/slice'
 import Loading from '../componenets/Loading';
+import {getAuth} from '../Redux/slice'
 export default function App() {
   const navigation=useNavigation()
   const [username,setUsername]=useState("")
   const [pass,setPass]=useState("")
   const [loader,setLoader]=useState(false)
   const [Error,seterror]=useState("")
+  const [check,setCheck]=useState(false)
   const dispatch=useDispatch()
   const Router=useNavigation()
+  let auth = useSelector(state=>state.userReducer.Auth)
   useFocusEffect(useCallback(() => {
+    if(auth){
+      Router.navigate("attendance")
+    }
     return () => {
       seterror(undefined)
       setLoader(false)
     };
-  }, [])
+  }, [auth])
 );
   const userHandler=(props)=>{
     setUsername(props)

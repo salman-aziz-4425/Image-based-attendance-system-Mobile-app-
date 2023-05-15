@@ -9,12 +9,15 @@ import { LastComparison,comparingFaces} from "../src/graphql/queries";
 import {storeImageToS3Bucket,removal,conversion} from '../componenets/utils'
 import Card from '../componenets/card';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Loading2 from '../componenets/loading2';
 export default function Attendance() {
   const [images, setPhoto] = useState([]);
   const [rollNumbers,setrollNumbers]=useState([])
   const [allUsers,setallUsers]=useState([])
   const [flag, setFlag] = useState(false);
   const [finalroll,setfinalroll]=useState([])
+  const [process,setProcess]=useState(false)
+  const [operation,setOperation]=useState("")
   let Token=useSelector(state=>state.userReducer.token)
   Amplify.configure({
     API: {
@@ -37,6 +40,8 @@ const getRollnumber=(rollNumbers,userRecords)=>{
 }
 
 const handleSubmit = async (e) => {
+  setOperation("Marking attendace")
+  setProcess(true)
   setFlag(false);
   let finalresponse = [];
   console.log(images.length)
@@ -60,6 +65,7 @@ const handleSubmit = async (e) => {
            await API.graphql(graphqlOperation(LastComparison))
              .then((result) => {
                if (!result?.data?.receiverSqsComparison?.resp) {
+                setProcess(false)
                  throw "Error";
                }
                console.log(result);
@@ -91,10 +97,12 @@ const handleSubmit = async (e) => {
              }
              console.log("response4 ",result);
              setfinalroll(result);
+             setProcess(false)
               alert("Attendance Marked go check view page");
            });
          }).catch((error) => {
            console.log("error => ", error);
+           setProcess(false)
             // setloading("Something went Wrong");
          });
        ___________________________________________
@@ -104,6 +112,9 @@ const handleSubmit = async (e) => {
 };
   return (
     <>
+   {
+      process&&<Loading2 text={operation}/>
+    }
     <View style={styles.container}>
   <View style={styles.galleryContainer}>
     <Gallery PreviewImage={PreviewImage}/>

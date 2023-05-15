@@ -6,12 +6,17 @@ import * as FileSystem from 'expo-file-system';
 import { API, Amplify, graphqlOperation } from "aws-amplify";
 import { getUser } from "../src/graphql/queries";
 import { useDispatch,useSelector } from "react-redux";
+import { tokenAuth } from '../Redux/slice';
 import { useNavigation } from '@react-navigation/native';
+import Loading2 from './loading2';
 const Document = (props) => {
   const [data, setData] = React.useState([]);
   const Token=useSelector(state=>state.userReducer.token)
   const [upload,setupload]=useState(false)
+  const [process,setProcess]=useState(false)
+  const [operation,setOperation]=useState("")
   const navigate=useNavigation()
+  const dispatch=useDispatch()
   Amplify.configure({
     API: {
       graphql_headers: async () => ({
@@ -20,6 +25,8 @@ const Document = (props) => {
     },
   });
   const pickDocument = async () => {
+    setOperation("Document Uploading")
+    setProcess(true)
     try {
       const result = await DocumentPicker.getDocumentAsync({});
       console.log(
@@ -56,6 +63,7 @@ const Document = (props) => {
               console.log("Resp => data => ", response?.data.getUser[0]);
               
             } catch (err) {
+              setProcess(false)
               console.log("err => ", err);
             }
           })).then(()=>{
@@ -63,9 +71,12 @@ const Document = (props) => {
             setData(usersRecords)
             alert("Document uploaded")
             setupload(true)
+            setProcess(false)
           })
     } catch (err) {
+      setProcess(false)
      alert("Try again with Valid file")
+     
     }
   };
 
@@ -82,7 +93,7 @@ const Document = (props) => {
             present:props.presentimages
         })}>
           <Text style={styles.viewButtonText}>View</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> 
         {(props.images.length > 0 && props.rollNumbers.length > 0) && 
     <TouchableOpacity onPress={props.handleSubmit}>
       <Image source={require("../assets/images/download.png")} style={styles.downloadButtonImage} resizeMode="cover"/>
@@ -90,6 +101,45 @@ const Document = (props) => {
   }
       </View>
     )}
+    {
+      process&&<Loading2 text={operation}/>
+    }
+<View style={{ top: 180, backgroundColor: "black", width: 800, height: 60 }}>
+<TouchableOpacity onPress={()=>{
+  console.log("hello")
+  dispatch(tokenAuth( {
+  }));
+   navigate.navigate('Home')
+}
+}>
+  <View
+    style={{
+      backgroundColor: "white",
+      height: 100,
+      width: 100,
+      position: "absolute",
+      left: "50%",
+      transform: [{ translateX: -50 }, { translateY: -45 }],
+      borderRadius: 50,
+      padding:20,
+      borderRadius:100,
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+  >
+  </View>
+  <Image
+    style={{
+      top: -30,
+      height:60,
+      width: 60,
+      left:370,
+      position: "absolute",
+    }}
+    source={require("../assets/images/logout.png")}
+  />
+  </TouchableOpacity>
+</View>
   </View>
   );
 };
@@ -97,7 +147,6 @@ const Document = (props) => {
 export default Document;
 const styles = StyleSheet.create({
   container: {
-
     alignItems: "center",
     justifyContent: "center",
   },
@@ -113,7 +162,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   viewButtonContainer: {
-    marginTop: 20,
+    marginTop:0,
   },
   viewButton: {
     backgroundColor: "#007AFF",

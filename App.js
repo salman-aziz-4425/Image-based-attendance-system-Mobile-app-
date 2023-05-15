@@ -18,10 +18,9 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
        <Stack.Group screenOptions={{headerShown: false}}>
-       <Stack.Screen name="attendance" component={Attendance} />
        <Stack.Screen name="Loading" component={LoadingScreen} />
        <Stack.Screen name="Home" component={Home} />
-       {/* <Stack.Screen name="attendance" component={Attendance} /> */}
+       <Stack.Screen name="attendance" component={Attendance} />
         </Stack.Group>
         <Stack.Group screenOptions={{presentation:"modal",headerShown:false}}>
           <Stack.Screen name="presentStudents" component={ModelPresent}></Stack.Screen>
