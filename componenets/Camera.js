@@ -53,9 +53,6 @@ export default function ImagePickerExample(props) {
   setProcess(false)
   return
 }
-    // Convert to blob
-    // const response = await fetch(result.assets[0].uri);
-    // const blob = await response.blob();
     if (!result.canceled) {
 
           setImage([...image,result.assets[0].uri]);
