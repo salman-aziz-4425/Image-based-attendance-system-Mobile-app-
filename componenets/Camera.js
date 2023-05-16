@@ -6,7 +6,8 @@ import {useSelector} from 'react-redux'
 import { analyzeImage } from '../src/graphql/queries';
 import {storeImageToS3Bucket} from './utils'
 import Loading2 from './loading2'
-export default function ImagePickerExample(props) {
+export default function ImagePickerExample(props) 
+{
   const [image, setImage] = useState([]);
   const [process,setProcess]=useState(false)
   const [operation,setOperation]=useState("")
@@ -56,6 +57,7 @@ export default function ImagePickerExample(props) {
     // Convert to blob
     // const response = await fetch(result.assets[0].uri);
     // const blob = await response.blob();
+
     if (!result.canceled) {
 
           setImage([...image,result.assets[0].uri]);
@@ -63,6 +65,7 @@ export default function ImagePickerExample(props) {
     }
     setProcess(false)
   }
+
   return (
 <View style={styles.container}>
   {
@@ -89,7 +92,6 @@ export default function ImagePickerExample(props) {
   
 </View>
 
-
   );
 }
 
@@ -100,28 +102,33 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: "#fff",
   },
+
   image: {
     width:500,
     height: 260,
     borderRadius: 10,
     marginHorizontal: 10,
   },
+
   placeholderImage: {
     width: 400,
     height: 300,
     borderRadius: 10,
   },
+
   addDeleteText: {
     top:-50,
     color: "gray",
     fontSize: 16,
   },
+
   buttonsContainer: {
     top:-30,
     flexDirection: "row",
     justifyContent: "space-between",
     width: "50%",
   },
+
   button: {
     backgroundColor: "#007AFF",
     width: 50,
@@ -130,6 +137,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  
   buttonIcon: {
     width: 30,
     height: 30,

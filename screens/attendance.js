@@ -21,6 +21,7 @@ export default function Attendance() {
   let Token=useSelector(state=>state.userReducer.token)
   Amplify.configure({
     API: {
+      //API Configuration
       graphql_headers: async () => ({
         token:Token||""
       }),
@@ -39,7 +40,10 @@ const getRollnumber=(rollNumbers,userRecords)=>{
   setallUsers(userRecords)
 }
 
-const handleSubmit = async (e) => {
+//getting students roll nos
+
+const handleSubmit = async (e) => 
+{
   setOperation("Marking attendace")
   setProcess(true)
   setFlag(false);
@@ -47,6 +51,7 @@ const handleSubmit = async (e) => {
   console.log(images.length)
   e.preventDefault();
   //Excel to array
+  //document
   if (rollNumbers.length>0) {
       await new Promise(async (r, e) => {
         console.log("next promise");
@@ -64,10 +69,12 @@ const handleSubmit = async (e) => {
            await new Promise((r) => setTimeout(r, 8500));
            await API.graphql(graphqlOperation(LastComparison))
              .then((result) => {
-               if (!result?.data?.receiverSqsComparison?.resp) {
+               if (!result?.data?.receiverSqsComparison?.resp) 
+               {
                 setProcess(false)
                  throw "Error";
                }
+               //response_1
                console.log(result);
                console.log(
                  "response1",
@@ -77,6 +84,7 @@ const handleSubmit = async (e) => {
                  result?.data?.receiverSqsComparison?.resp,
                  rollNumbers
                ).then((result) => {
+                //response_2
                  console.log("response2", result);
                  finalresponse = finalresponse.concat(result)
                });
@@ -91,13 +99,15 @@ const handleSubmit = async (e) => {
              throw "Error";
            }
           //  Removal of duplication
-           removal(result).then((result) => {
+           removal(result).then((result) => 
+           {
              if (result.length < 1) {
                throw "Error";
              }
              console.log("response4 ",result);
              setfinalroll(result);
              setProcess(false)
+             //set_alert
               alert("Attendance Marked go check view page");
            });
          }).catch((error) => {
@@ -110,6 +120,8 @@ const handleSubmit = async (e) => {
 
    }
 };
+
+//setting_front_view
   return (
     <>
    {

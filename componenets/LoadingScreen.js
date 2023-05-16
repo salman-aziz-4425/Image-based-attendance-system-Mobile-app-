@@ -25,7 +25,8 @@ const LoadingScreen= () => {
     navigate.navigate('Home')
   };
 
-  const RenderItem = ({item}) => {
+  const RenderItem = ({item}) => 
+  {
     return (
       <View
         style={{
@@ -50,6 +51,7 @@ const LoadingScreen= () => {
       </View>
     );
   };
+
   const RenderNextButton = () => {
     return (
       <TouchableOpacity style={styles.buttonCircle} onPress={onDone}>
@@ -74,7 +76,8 @@ const LoadingScreen= () => {
     );
   };
 
-  return (
+  return 
+  (
     <>
       {showRealApp ? (
         <SafeAreaView style={styles.container}>
@@ -117,6 +120,7 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'center',
   },
+
   titleStyle: {
     padding: 10,
     textAlign: 'center',
@@ -124,22 +128,26 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+
   paragraphStyle: {
     padding: 20,
     color:"gray",
     textAlign: 'center',
     fontSize: 16,
   },
+
   introImageStyle: {
     width:400,
     height:400,
   },
+
   introTextStyle: {
     fontSize: 18,
     color: 'gray',
     textAlign: 'center',
     paddingVertical: 30,
   },
+
   introTitleStyle: {
     marginTop:100,
     fontSize: 25,
@@ -148,6 +156,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     fontWeight: 'bold',
   },
+  
   buttonCircle: {
     width: 40,
     height: 40,

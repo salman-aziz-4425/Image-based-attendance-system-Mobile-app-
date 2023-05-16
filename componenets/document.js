@@ -24,6 +24,7 @@ const Document = (props) => {
       }),
     },
   });
+  
   const pickDocument = async () => {
     setOperation("Document Uploading")
     setProcess(true)

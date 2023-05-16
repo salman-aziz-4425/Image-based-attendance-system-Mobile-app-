@@ -4,10 +4,12 @@ import { useRoute } from '@react-navigation/native'
 import Card from './card'
 import { ScrollView } from 'react-native-gesture-handler'
 
-const ModelPresent = () => {
+const ModelPresent = () => 
+{
   let array=useRoute()
   console.log(array.params.present)
-  return (
+  return 
+  (
     <>
       <View style={styles.header}>
       <Text style={styles.title}>Students</Text>
@@ -60,6 +62,7 @@ const styles = StyleSheet.create({
     marginTop:20,
     borderBottomColor: '#ddd',
   },
+  
   title: {
     fontSize: 20,
     fontWeight: 'bold',

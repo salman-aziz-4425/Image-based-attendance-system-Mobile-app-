@@ -44,6 +44,7 @@ export default function App() {
         password: pass,
       }, // key is "input" based on the mutation above
     };
+
     console.log(variables)
     await API.graphql(graphqlOperation(Loginuser, variables))
       .then(async (result) => {
@@ -65,6 +66,7 @@ export default function App() {
           rollNumber:result.data.loginUser.user.rollNumber,
           Auth:true
         }));
+
         console.log(result.data.loginUser.user.rollNumber)
         if(result.data.loginUser.user.rollNumber.includes("TD")){
           Router.navigate("attendance");
@@ -73,6 +75,7 @@ export default function App() {
           setLoader(false)
         }
       })
+
       .catch((error) => {
         console.log(error);
         console.log("error");
@@ -127,6 +130,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
   input: {
     height: 40,
     margin: 12,
@@ -136,6 +140,7 @@ const styles = StyleSheet.create({
     width:"50%",
     marginBottom:20
   },
+
   button:{
     backgroundColor:"navy",
     color:"white",
@@ -145,20 +150,24 @@ const styles = StyleSheet.create({
     paddingHorizontal:20,
     borderRadius:20,
   },
+
   tinyLogo: {
     width:200,
     height:150,
   },
+
   logo: {
     width: 66,
     height: 58,
   },
+
   linearGradient: {
     flex: 1,
     paddingLeft: 15,
     paddingRight: 15,
     borderRadius: 5
   },
+  
   buttonText: {
     fontSize: 18,
     fontFamily: 'Gill Sans',

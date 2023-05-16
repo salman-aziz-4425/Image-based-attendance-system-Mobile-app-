@@ -2,8 +2,10 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import * as Animatable from 'react-native-animatable';
 
-const Loading = () => {
-  return (
+const Loading = () => 
+{
+  return 
+  (
     <View>
           <Animatable.Image
         animation="pulse"
