@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-
+// redux slice
 const initialState = {
   id:' ',
   token:'',
