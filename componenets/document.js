@@ -96,7 +96,7 @@ const Document = (props) => {
         </TouchableOpacity> 
         {(props.images.length > 0 && props.rollNumbers.length > 0) && 
     <TouchableOpacity onPress={props.handleSubmit}>
-      <Image source={require("../assets/images/download.png")} style={styles.downloadButtonImage} resizeMode="cover"/>
+      <Image source={require("../assets/images/camera.png")} style={styles.downloadButtonImage} resizeMode="cover"/>
     </TouchableOpacity>
   }
       </View>
@@ -175,9 +175,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   downloadButtonImage: {
-    backgroundColor:"blue",
-    height:90,
+    marginTop:13,
+    height:60,
     width:60,
+    left:15,
     zIndex:1
   },
   documentContainer: {
